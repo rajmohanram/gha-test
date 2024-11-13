@@ -1,0 +1,27 @@
+name: Lint Code Base
+
+on:
+  pull_request:
+    paths:
+      - "**/*.yml"
+      - "**/*.yaml"
+
+permissions:
+  contents: read          # Only read access is needed for contents
+  pull-requests: read     # Read access for pull requests
+  packages: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Super-Linter
+        uses: github/super-linter@v5
+        env:
+          VALIDATE_YAML: true
+          DEFAULT_BRANCH: main
+          YAML_CONFIG_FILE: .yamllint
